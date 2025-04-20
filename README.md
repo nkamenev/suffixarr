@@ -38,11 +38,8 @@ import (
 
 func main() {
 	// Example text: "banana" as int32 slice (ASCII values)
-	text := []int32{'b', 'a', 'n', 'a', 'n', 'a'}
+	text := []int32("banana")
 	sa := suffixarr.New(text)
-
-	// Print suffix array
-	fmt.Println("Suffix Array:", sa)
 }
 ```
 

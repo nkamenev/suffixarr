@@ -95,68 +95,82 @@ func TestSAIS(t *testing.T) {
 
 func TestLookup(t *testing.T) {
 	tests := map[string]struct {
-		text, prefix, lexOrdExp, textOrdExp []int32
+		text,
+		prefix,
+		lexOrdExp,
+		textOrdExp []int32
+		sufExp int
 	}{
 		"empty": {
 			text:       []int32{},
 			prefix:     []int32("a"),
 			lexOrdExp:  []int32{},
 			textOrdExp: []int32{},
+			sufExp:     -1,
 		},
 		"same characters": {
 			text:       []int32("aaaaaaa"),
 			prefix:     []int32("a"),
 			lexOrdExp:  []int32{6, 5, 4, 3, 2, 1, 0},
 			textOrdExp: []int32{0, 1, 2, 3, 4, 5, 6},
+			sufExp:     6,
 		},
 		"banana": {
 			text:       []int32("banana"),
 			prefix:     []int32("banana"),
 			lexOrdExp:  []int32{0},
 			textOrdExp: []int32{0},
+			sufExp:     0,
 		},
 		"anana": {
 			text:       []int32("banana"),
 			prefix:     []int32("anana"),
 			lexOrdExp:  []int32{1},
 			textOrdExp: []int32{1},
+			sufExp:     1,
 		},
 		"nana": {
 			text:       []int32("banana"),
 			prefix:     []int32("nana"),
 			lexOrdExp:  []int32{2},
 			textOrdExp: []int32{2},
+			sufExp:     2,
 		},
 		"ana": {
 			text:       []int32("banana"),
 			prefix:     []int32("ana"),
 			lexOrdExp:  []int32{3, 1},
 			textOrdExp: []int32{1, 3},
+			sufExp:     3,
 		},
 		"na": {
 			text:       []int32("banana"),
 			prefix:     []int32("na"),
 			lexOrdExp:  []int32{4, 2},
 			textOrdExp: []int32{2, 4},
+			sufExp:     4,
 		},
 		"a": {
 			text:       []int32("banana"),
 			prefix:     []int32("a"),
 			lexOrdExp:  []int32{5, 3, 1},
 			textOrdExp: []int32{1, 3, 5},
+			sufExp:     5,
 		},
 		"not found": {
 			text:       []int32("banana"),
 			prefix:     []int32("ab"),
 			lexOrdExp:  []int32{},
 			textOrdExp: []int32{},
+			sufExp:     -1,
 		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			assert.Equal(t, tc.lexOrdExp, New(tc.text).Lookup(tc.prefix))
-			assert.Equal(t, tc.textOrdExp, New(tc.text).LookupTextOrd(tc.prefix))
+			assert.Equal(t, tc.textOrdExp, New(tc.text).LookupTextOrder(tc.prefix))
+			assert.Equal(t, tc.sufExp, New(tc.text).LookupSuffix(tc.prefix))
 		})
 	}
 }

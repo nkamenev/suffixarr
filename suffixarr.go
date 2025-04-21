@@ -1,5 +1,3 @@
-// Copyright (c) 2025 Nikita Kamenev
-// Licensed under the MIT License. See LICENSE file in the project root for details.
 package suffixarr
 
 import (
@@ -75,7 +73,7 @@ func (sa *SuffixArray) Lookup(prefix []int32) []int32 {
 // Parameters:
 // - prefix: prefix to search for (slice of int32).
 // Returns a slice of indices sorted by their position in the text.
-func (sa *SuffixArray) LookupTextOrd(prefix []int32) []int32 {
+func (sa *SuffixArray) LookupTextOrder(prefix []int32) []int32 {
 	indices := sa.Lookup(prefix)
 	cp := make([]int32, len(indices))
 	copy(cp, indices)
@@ -85,4 +83,28 @@ func (sa *SuffixArray) LookupTextOrd(prefix []int32) []int32 {
 	})
 
 	return cp
+}
+
+// LookupSuffix finds the exact suffix in the text.
+// Parameters:
+// - suffix: suffix to search for (slice of int32).
+// Returns:
+// - -1 if the suffix is not found or invalid input is provided.
+// - The index in the text where the suffix starts if found.
+func (sa *SuffixArray) LookupSuffix(suffix []int32) int {
+	if len(suffix) == 0 || len(sa.sa) == 0 || len(suffix) > len(sa.text) {
+		return -1
+	}
+	i := sort.Search(len(sa.sa), func(i int) bool {
+		suf := sa.text[sa.sa[i]:]
+		cmp := comparePrefix(suf, suffix)
+		return cmp >= 0
+	})
+	if i < len(sa.sa) {
+		suf := sa.text[sa.sa[i]:]
+		if len(suf) == len(suffix) && comparePrefix(suf, suffix) == 0 {
+			return int(sa.sa[i])
+		}
+	}
+	return -1
 }

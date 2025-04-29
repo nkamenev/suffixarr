@@ -56,11 +56,6 @@ fmt.Println("Occurrences of 'a' (lexicographical order):", indices)
 // Find occurrences in text order
 textOrdered := sa.LookupTextOrd(prefix)
 fmt.Println("Occurrences of 'a' (text order):", textOrdered)
-
-// Find exact suffix "ana"
-suffix := []int32("ana")
-index := sa.LookupSuffix(suffix)
-fmt.Println("Index of suffix 'ana':", index)
 ```
 
 ### Example Output
@@ -70,8 +65,6 @@ For text `"banana"`:
 - Suffix array: `[5 3 1 0 4 2]` (indices of suffixes `["a", "ana", "anana", "banana", "na", "nana"]`).
 - `Lookup("a")`: `[5 3 1]` (suffixes `"a"`, `"ana"`, `"anana"`).
 - `LookupTextOrd("a")`: `[1 3 5]` (same indices sorted by text position).
-- `LookupSuffix("ana")`: `3` (index of suffix `"ana"`).
-- `LookupSuffix("ab")`: `-1` (suffix not found).
 
 ## Algorithm Details
 

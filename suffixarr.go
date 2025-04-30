@@ -264,6 +264,7 @@ func (gsa *GSA) makeIndex(sa []int32, sz int) []Index {
 		gsa.idx[str].i = 0
 		index[k] = curr
 		k++
+		prev = j
 	}
 	return index
 }
@@ -294,8 +295,8 @@ func (gsa *GSA) LookupSuffix(suf []int32) []Index {
 }
 
 // LookupPrefix finds prefix occurrences in the generalized suffix array, sorted by text position.
-func (gsa *GSA) LookupPrefix(suf []int32) []Index {
-	if len(suf) == 0 {
+func (gsa *GSA) LookupPrefix(prefix []int32) []Index {
+	if len(prefix) == 0 {
 		// Return -1 for each string if prefix is empty.
 		for i := 0; i < len(gsa.src); i++ {
 			gsa.idx[i].sa[0] = -1
@@ -304,9 +305,9 @@ func (gsa *GSA) LookupPrefix(suf []int32) []Index {
 		return gsa.index
 	}
 	// Prepend separator to match string start.
-	cp := make([]int32, len(suf)+1)
+	cp := make([]int32, len(prefix)+1)
 	cp[0] = sep
-	copy(cp[1:], suf)
+	copy(cp[1:], prefix)
 	res := lookupTextOrder(gsa.text, gsa.sa, cp)
 	sz := gsa.fillIdx(res)
 	return gsa.makeIndex(res, sz)

@@ -15,13 +15,13 @@ This project provides an efficient implementation of a suffix array using the **
 1. Install the package using:
 
    ```bash
-   go get github.com/nekitakamenev/suffixarr
+   go get github.com/nkamenev/suffixarr
    ```
 2. Ensure the Go environment is set up (Go 1.18 or later recommended).
 3. Import the package in your Go code:
 
    ```go
-   import "github.com/nekitakamenev/suffixarr"
+   import "github.com/nkamenev/suffixarr"
    ```
 
 ## Usage
@@ -33,7 +33,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/nekitakamenev/suffixarr"
+	"github.com/nkamenev/suffixarr"
 )
 
 func main() {

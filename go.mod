@@ -1,4 +1,4 @@
-module github.com/nekitakamenev/suffixarr
+module github.com/nkamenev/suffixarr
 
 go 1.23.6
 

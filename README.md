@@ -1,3 +1,5 @@
+[![docs](https://pkg.go.dev/badge/github.com/nkamenev/suffixarr.svg)](https://pkg.go.dev/github.com/nkamenev/suffixarr)
+
 # Suffix Array Implementation in Go
 
 This project provides an efficient implementation of a suffix array using the **SA-IS algorithm** (Suffix Array Induced Sorting) in Go. It supports both small (≤256 characters) and arbitrary alphabets, optimized for performance and memory usage. The implementation is designed for string processing tasks such as pattern matching, substring search, and text indexing.
